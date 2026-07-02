@@ -3,55 +3,64 @@ import { Image } from 'astro:assets';
 import archangelMichael from '../assets/portfolio/archangel-michael.png';
 ---
 
-<section id="signature" class="signature bg-near-black" data-signature-section>
+<section id="signature" class="signature bg-obsidian" data-signature-section>
   <div class="signature__pin" data-signature-pin>
-    <div class="signature__eyebrow-row">
-      <p class="eyebrow">Signature Piece</p>
+    <div class="signature__meta-top" data-signature-fade>
+      <p class="eyebrow eyebrow--center signature__eyebrow">Signature Piece</p>
     </div>
 
     <div class="signature__frame" data-signature-frame>
       <Image
         class="signature__image"
         src={archangelMichael}
-        alt="Realism forearm piece — Archangel Michael, wings and chains beneath a radiant halo"
+        alt="Black & grey realism forearm piece — Archangel Michael with outspread wings beneath a radiant halo"
         widths={[500, 900, 1400]}
-        sizes="(min-width: 900px) 64rem, 100vw"
+        sizes="(min-width: 900px) 40rem, 100vw"
       />
+      <div class="signature__vignette" aria-hidden="true"></div>
     </div>
 
     <div class="signature__caption" data-signature-caption>
-      <h3 class="signature__title">Archangel Michael</h3>
-      <p class="signature__meta">Forearm &middot; black &amp; grey realism</p>
+      <h3 class="signature__title metallic-text">Archangel Michael</h3>
+      <p class="signature__desc">
+        Forearm &middot; black &amp; grey realism &middot; the kind of tonal depth a photograph
+        of a grid could never show.
+      </p>
     </div>
+
+    <span class="signature__scrub-hint" aria-hidden="true" data-signature-fade>Keep scrolling</span>
   </div>
 </section>
 
 <style>
   .signature {
     position: relative;
-    padding-block: clamp(4rem, 10vw, 7rem);
+    overflow: hidden;
   }
 
   .signature__pin {
-    width: 100%;
-    max-width: var(--content-max);
-    margin-inline: auto;
-    padding-inline: var(--gutter);
+    min-height: 100svh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.75rem;
-  }
-
-  .signature__eyebrow-row {
+    justify-content: center;
+    gap: clamp(1.5rem, 3vw, 2.25rem);
+    padding-block: clamp(4rem, 9vw, 7rem);
+    padding-inline: var(--gutter);
     text-align: center;
   }
 
+  .signature__eyebrow {
+    color: var(--ink-on-dark-soft);
+  }
+
   .signature__frame {
-    width: min(100%, 34rem);
+    position: relative;
+    width: min(90vw, 20rem);
     aspect-ratio: 3 / 4;
     overflow: hidden;
     border-radius: var(--radius-lg);
+    box-shadow: 0 40px 90px -40px rgba(0, 0, 0, 0.9);
     will-change: transform, clip-path;
   }
 
@@ -59,25 +68,41 @@ import archangelMichael from '../assets/portfolio/archangel-michael.png';
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: grayscale(1) contrast(1.05);
+    filter: grayscale(1) contrast(1.08);
+  }
+
+  .signature__vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.4) 100%);
+    pointer-events: none;
   }
 
   .signature__caption {
-    text-align: center;
+    max-width: 30rem;
     opacity: 0;
-    transform: translateY(16px);
+    transform: translateY(20px);
   }
 
   .signature__title {
     font-size: var(--text-h3);
-    font-weight: 500;
+    font-weight: 600;
   }
 
-  .signature__meta {
-    margin-top: 0.35rem;
+  .signature__desc {
+    margin-top: 0.6rem;
     font-size: var(--text-small);
-    color: var(--ink-mid);
-    letter-spacing: 0.03em;
+    font-weight: 300;
+    color: var(--ink-on-dark-soft);
+    line-height: 1.6;
+  }
+
+  .signature__scrub-hint {
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: rgba(243, 242, 239, 0.4);
   }
 
   @media (prefers-reduced-motion: reduce) {

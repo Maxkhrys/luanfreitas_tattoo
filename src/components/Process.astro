@@ -3,7 +3,7 @@ const steps = [
   {
     n: '01',
     title: 'Consultation',
-    body: 'A conversation about concept, placement, scale and reference imagery — in person or via DM — to establish whether the piece is right for realism treatment.',
+    body: 'A conversation about concept, placement, scale and reference — in person or via DM — to establish whether the piece is right for realism treatment.',
   },
   {
     n: '02',
@@ -12,110 +12,128 @@ const steps = [
   },
   {
     n: '03',
-    title: 'Session(s)',
+    title: 'The Sessions',
     body: 'Large realism work is rarely a single sitting. Expect multiple sessions scheduled with enough recovery between them for skin and detail to hold.',
   },
   {
     n: '04',
     title: 'Healing',
-    body: 'Aftercare guidance is provided for every session, with follow-up to check healing before any further detail work is added.',
+    body: 'Aftercare guidance for every session, with follow-up to check healing before any further detail work is added.',
   },
 ];
 ---
 
-<section id="process" class="section bg-near-black">
+<section id="process" class="section bg-paper">
   <div class="wrap">
-    <div class="process__head" data-reveal>
-      <p class="eyebrow">Process</p>
-      <h2 class="process__title">
+    <div class="process__head">
+      <p class="eyebrow" data-reveal>The Process</p>
+      <h2 class="process__title" data-reveal-line>
         <span class="metallic-text" data-sheen>What to Expect</span>
       </h2>
-      <p class="lede process__lede">
+      <p class="lede process__lede" data-reveal>
         Realism is a long-form commitment on both sides. The thoroughness below is part of the
-        premium experience, not a detour from it.
+        premium experience — not a detour from it.
       </p>
     </div>
 
     <ol class="process__steps">
       {steps.map((s) => (
         <li class="process__step" data-reveal>
-          <span class="process__num metallic-text">{s.n}</span>
-          <div>
+          <span class="process__num">{s.n}</span>
+          <div class="process__step-body">
             <h3 class="process__step-title">{s.title}</h3>
-            <p class="process__step-body">{s.body}</p>
+            <p class="process__step-text">{s.body}</p>
           </div>
+          <span class="process__step-line" aria-hidden="true"></span>
         </li>
       ))}
     </ol>
 
-    <p class="process__healed" data-reveal>
-      [Placeholder: healed-work photography note — supplied]
-    </p>
+    <p class="process__healed" data-reveal>[Placeholder: healed-work photography note — supplied]</p>
   </div>
 </section>
 
 <style>
   .process__head {
-    max-width: 40rem;
+    max-width: 42rem;
   }
 
   .process__title {
-    margin-top: 0.5rem;
+    margin-top: 0.65rem;
     font-size: var(--text-h2);
   }
 
   .process__lede {
-    margin-top: 1rem;
+    margin-top: 1.25rem;
   }
 
   .process__steps {
     list-style: none;
     margin-top: clamp(2.5rem, 6vw, 4rem);
-    display: grid;
-    gap: 0;
   }
 
   .process__step {
+    position: relative;
     display: grid;
     grid-template-columns: auto 1fr;
-    gap: clamp(1.25rem, 3vw, 2.5rem);
-    align-items: start;
-    padding-block: clamp(1.5rem, 3vw, 2.25rem);
-    border-top: 1px solid var(--line-soft);
+    gap: clamp(1.25rem, 3vw, 3rem);
+    align-items: baseline;
+    padding-block: clamp(1.5rem, 3vw, 2.5rem);
   }
 
-  .process__step:last-child {
-    border-bottom: 1px solid var(--line-soft);
+  .process__step-line {
+    grid-column: 1 / -1;
+    height: 1px;
+    background: var(--line);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 1s var(--ease-out-expo);
+  }
+
+  .process__step:first-child::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--line);
+  }
+
+  .process__step[data-revealed] .process__step-line {
+    transform: scaleX(1);
   }
 
   .process__num {
-    font-family: var(--font-display);
-    font-size: clamp(2rem, 4vw, 3rem);
-    line-height: 1;
+    font-family: var(--font-mono);
+    font-size: var(--text-tiny);
+    letter-spacing: 0.1em;
+    color: var(--ink-faint);
+    padding-top: 0.4rem;
   }
 
   .process__step-title {
     font-size: var(--text-h3);
-    font-weight: 500;
+    font-weight: 600;
   }
 
-  .process__step-body {
-    margin-top: 0.5rem;
-    max-width: 34rem;
+  .process__step-text {
+    margin-top: 0.6rem;
+    max-width: 36rem;
     color: var(--ink-soft);
   }
 
   .process__healed {
     margin-top: clamp(2rem, 4vw, 3rem);
-    font-size: var(--text-small);
-    font-style: italic;
+    font-family: var(--font-mono);
+    font-size: var(--text-tiny);
     color: var(--ink-faint);
     text-align: center;
   }
 
   @media (min-width: 700px) {
     .process__step {
-      grid-template-columns: 6rem 1fr;
+      grid-template-columns: 4rem 1fr;
     }
   }
 </style>

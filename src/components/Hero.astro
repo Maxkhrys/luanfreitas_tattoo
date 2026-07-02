@@ -1,36 +1,65 @@
-<section id="hero" class="hero">
-  <div class="hero__media">
-    <video
-      id="hero-video"
-      class="hero__video"
-      poster="/media/hero-poster.jpg"
-      autoplay
-      muted
-      loop
-      playsinline
-      preload="none"
-    >
-      <source src="/media/hero-reel.mp4" type="video/mp4" />
-    </video>
+---
+import { Image } from 'astro:assets';
+import heroStill from '../assets/portfolio/jesus-crown-of-thorns.png';
+---
 
-    <div id="hero-fallback" class="hero__fallback">
-      <span class="placeholder-badge hero__fallback-badge">Placeholder — hero reel supplied</span>
-      <span class="hero__fallback-note">Muted looping process footage will autoplay here on delivery.</span>
+<section id="hero" class="hero">
+  <div class="wrap hero__grid">
+    <div class="hero__lead">
+      <p class="eyebrow hero__eyebrow" data-hero="eyebrow">
+        Dublin &middot; Internationally Awarded
+      </p>
+
+      <h1 class="hero__mark">
+        <span class="hero__line"><span class="hero__word metallic-text" data-hero="word">Luan</span></span>
+        <span class="hero__line"><span class="hero__word metallic-text" data-hero="word">Freitas</span></span>
+      </h1>
+
+      <p class="hero__tagline" data-hero="tagline">
+        Black &amp; grey realism, rendered with the patience of a portrait painter.
+        A studio practice built one long session at a time.
+      </p>
+
+      <div class="hero__actions" data-hero="actions">
+        <a href="#booking" class="btn btn--ink" data-magnetic>Book a Consultation</a>
+        <a href="#portfolio" class="hero__scroll-text">
+          View the work
+          <span class="hero__scroll-arrow" aria-hidden="true">&darr;</span>
+        </a>
+      </div>
     </div>
 
-    <div class="hero__overlay" aria-hidden="true"></div>
+    <div class="hero__frame-wrap" data-hero="frame">
+      <figure class="hero__frame" data-parallax data-parallax-speed="0.12">
+        <Image
+          class="hero__frame-img"
+          src={heroStill}
+          alt="Black & grey realism forearm tattoo — Christ crowned with thorns"
+          widths={[500, 800, 1100]}
+          sizes="(min-width: 900px) 40vw, 90vw"
+          loading="eager"
+          fetchpriority="high"
+        />
+        <video
+          id="hero-video"
+          class="hero__video"
+          poster={heroStill.src}
+          muted
+          loop
+          playsinline
+          preload="none"
+        >
+          <source src="/media/hero-reel.mp4" type="video/mp4" />
+        </video>
+        <span class="placeholder-badge hero__badge">Reel — supplied on delivery</span>
+      </figure>
+
+      <span class="hero__frame-caption" data-hero="caption">Fig. 01 — recent commission</span>
+    </div>
   </div>
 
-  <div class="wrap hero__content">
-    <p class="eyebrow hero__eyebrow" data-reveal-hero>Dublin &middot; Black &amp; Grey Realism</p>
-    <h1 class="hero__mark">
-      <span class="metallic-text" data-sheen data-sheen-immediate>Luan Freitas</span>
-    </h1>
-    <p class="hero__tagline" data-reveal-hero>Black &amp; grey realism. Dublin.</p>
-  </div>
-
-  <div class="hero__cue" aria-hidden="true">
-    <span>Scroll</span>
+  <div class="hero__cue" aria-hidden="true" data-hero="cue">
+    <span class="hero__cue-label">Scroll</span>
     <span class="hero__cue-line"></span>
   </div>
 </section>
@@ -40,156 +69,188 @@
     position: relative;
     min-height: 100svh;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
+    padding-top: calc(var(--nav-height) + clamp(1rem, 4vw, 3rem));
+    padding-bottom: clamp(3rem, 8vw, 6rem);
+    background: var(--paper);
     overflow: hidden;
-    background: var(--near-black);
   }
 
-  .hero__media {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
+  .hero__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(2.5rem, 5vw, 4rem);
+    align-items: center;
+    width: 100%;
   }
 
-  .hero__video,
-  .hero__fallback {
+  .hero__lead {
+    max-width: 34rem;
+  }
+
+  .hero__mark {
+    margin-top: 1.5rem;
+    font-size: var(--text-hero);
+    font-weight: 700;
+    line-height: 0.9;
+    letter-spacing: -0.035em;
+  }
+
+  .hero__line {
+    display: block;
+    overflow: hidden;
+    padding-bottom: 0.04em;
+  }
+
+  .hero__word {
+    display: inline-block;
+  }
+
+  .hero__tagline {
+    margin-top: clamp(1.5rem, 3vw, 2.25rem);
+    font-size: clamp(1.05rem, 1.5vw, 1.3rem);
+    font-weight: 300;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    max-width: 30rem;
+  }
+
+  .hero__actions {
+    margin-top: clamp(2rem, 4vw, 2.75rem);
+    display: flex;
+    align-items: center;
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+    flex-wrap: wrap;
+  }
+
+  .hero__scroll-text {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6em;
+    font-family: var(--font-mono);
+    font-size: var(--text-tiny);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-mid);
+    transition: color var(--dur) var(--ease);
+  }
+
+  .hero__scroll-text:hover {
+    color: var(--ink);
+  }
+
+  .hero__scroll-arrow {
+    transition: transform 0.4s var(--ease-out-expo);
+  }
+
+  .hero__scroll-text:hover .hero__scroll-arrow {
+    transform: translateY(3px);
+  }
+
+  .hero__frame-wrap {
+    position: relative;
+    justify-self: center;
+    width: min(100%, 22rem);
+  }
+
+  .hero__frame {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.6),
+      0 30px 60px -30px rgba(17, 17, 19, 0.35);
+    will-change: transform;
+  }
+
+  .hero__frame-img,
+  .hero__video {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
+    filter: grayscale(1) contrast(1.05);
   }
 
   .hero__video {
-    animation: hero-kenburns 24s ease-in-out infinite alternate;
+    opacity: 0;
+    transition: opacity 1s var(--ease);
   }
 
-  .hero__video.is-missing {
-    display: none;
+  .hero__video.is-playing {
+    opacity: 1;
   }
 
-  .hero__fallback {
-    display: none;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-end;
-    gap: 0.6rem;
-    text-align: left;
-    padding: clamp(1.5rem, 4vw, 2.5rem);
-    background:
-      radial-gradient(ellipse at 30% 20%, rgba(232, 234, 238, 0.06), transparent 55%),
-      radial-gradient(ellipse at 75% 80%, rgba(255, 255, 255, 0.04), transparent 60%),
-      linear-gradient(160deg, var(--graphite) 0%, var(--near-black) 65%);
-    animation: hero-kenburns 24s ease-in-out infinite alternate;
+  .hero__badge {
+    top: auto;
+    bottom: 0.85rem;
+    left: 0.85rem;
   }
 
-  .hero__fallback.is-active {
-    display: flex;
-  }
-
-  .hero__fallback-badge {
-    position: static;
-  }
-
-  .hero__fallback-note {
-    max-width: 20rem;
-    font-size: var(--text-tiny);
+  .hero__frame-caption {
+    display: block;
+    margin-top: 0.9rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
     color: var(--ink-faint);
-  }
-
-  @keyframes hero-kenburns {
-    from {
-      transform: scale(1);
-    }
-    to {
-      transform: scale(1.08);
-    }
-  }
-
-  .hero__overlay {
-    position: absolute;
-    inset: 0;
-    background:
-      linear-gradient(to bottom, rgba(10, 10, 10, 0.55) 0%, rgba(10, 10, 10, 0.35) 40%, rgba(10, 10, 10, 0.85) 100%),
-      linear-gradient(to right, rgba(10, 10, 10, 0.4), rgba(10, 10, 10, 0.1) 40%, rgba(10, 10, 10, 0.4));
-  }
-
-  .hero__content {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 1.25rem;
-  }
-
-  .hero__eyebrow {
-    color: var(--silver);
-  }
-
-  .hero__mark {
-    font-size: var(--text-hero);
-    font-weight: 500;
-    letter-spacing: -0.01em;
-    line-height: 1;
-  }
-
-  .hero__tagline {
-    font-family: var(--font-body);
-    font-size: clamp(1.05rem, 1.8vw, 1.4rem);
-    color: var(--ink-soft);
-    letter-spacing: 0.02em;
+    text-align: right;
   }
 
   .hero__cue {
     position: absolute;
-    bottom: clamp(1.5rem, 4vw, 2.5rem);
+    bottom: clamp(1.25rem, 3vw, 2rem);
     left: 50%;
     transform: translateX(-50%);
-    z-index: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.6rem;
-    font-size: var(--text-tiny);
-    letter-spacing: 0.22em;
+    gap: 0.55rem;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.24em;
     text-transform: uppercase;
     color: var(--ink-faint);
   }
 
   .hero__cue-line {
     width: 1px;
-    height: 2.5rem;
-    background: linear-gradient(to bottom, var(--silver-dim), transparent);
-    animation: hero-cue 2.8s var(--ease-soft) infinite;
+    height: 2.75rem;
+    background: linear-gradient(to bottom, var(--ink-faint), transparent);
+    transform-origin: top;
+    animation: hero-cue 2.6s var(--ease-soft) infinite;
   }
 
   @keyframes hero-cue {
     0% {
+      transform: scaleY(0.25);
       opacity: 0.2;
-      transform: scaleY(0.3);
-      transform-origin: top;
     }
-    50% {
-      opacity: 1;
+    45% {
       transform: scaleY(1);
-      transform-origin: top;
+      opacity: 1;
     }
     100% {
+      transform: scaleY(0.25);
       opacity: 0.2;
-      transform: scaleY(0.3);
-      transform-origin: top;
+    }
+  }
+
+  @media (min-width: 900px) {
+    .hero__grid {
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: clamp(3rem, 6vw, 6rem);
+    }
+    .hero__frame-wrap {
+      justify-self: end;
+      width: min(100%, 26rem);
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .hero__video,
-    .hero__fallback {
-      animation: none;
-    }
     .hero__cue-line {
       animation: none;
       opacity: 0.5;
@@ -198,27 +259,16 @@
 </style>
 
 <script>
+  // Framed still is always visible (the reduced-motion / no-reel fallback).
+  // The video fades in on top only if a real reel is supplied and plays.
   const video = document.getElementById('hero-video') as HTMLVideoElement | null;
-  const fallback = document.getElementById('hero-fallback');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  const showFallback = () => {
-    video?.classList.add('is-missing');
-    fallback?.classList.add('is-active');
-  };
-
   if (video && !reducedMotion) {
-    video.addEventListener('error', showFallback, { once: true });
+    video.addEventListener('canplay', () => {
+      video.play().then(() => video.classList.add('is-playing')).catch(() => {});
+    });
     video.preload = 'auto';
     video.load();
-    video.play().catch(() => showFallback());
-
-    // If nothing has started playing shortly after load, assume the
-    // source is a placeholder/missing asset and fall back gracefully.
-    window.setTimeout(() => {
-      if (video.readyState === 0) showFallback();
-    }, 2500);
-  } else {
-    showFallback();
   }
 </script>

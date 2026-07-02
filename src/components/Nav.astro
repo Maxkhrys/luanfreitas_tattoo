@@ -1,23 +1,25 @@
 ---
 const links = [
   { href: '#portfolio', label: 'Portfolio' },
+  { href: '#signature', label: 'Signature' },
   { href: '#about', label: 'About' },
   { href: '#process', label: 'Process' },
-  { href: '#booking', label: 'Book' },
 ];
 ---
 
 <header id="site-nav" class="site-nav">
   <div class="wrap site-nav__inner">
-    <a href="#top" class="site-nav__mark">Luan Freitas</a>
+    <a href="#top" class="site-nav__mark">
+      Luan Freitas<span class="site-nav__mark-dot">.</span>
+    </a>
 
     <nav class="site-nav__links" aria-label="Primary">
       {links.map((l) => (
-        <a href={l.href}>{l.label}</a>
+        <a href={l.href}><span>{l.label}</span></a>
       ))}
     </nav>
 
-    <a href="#booking" class="btn btn--metal site-nav__cta">Book Consultation</a>
+    <a href="#booking" class="btn btn--ink site-nav__cta" data-magnetic>Book</a>
 
     <button
       id="nav-toggle"
@@ -35,6 +37,7 @@ const links = [
     {links.map((l) => (
       <a href={l.href}>{l.label}</a>
     ))}
+    <a href="#booking" class="site-nav__mobile-cta">Book a Consultation</a>
   </nav>
 </header>
 
@@ -49,12 +52,15 @@ const links = [
     align-items: center;
     background: transparent;
     border-bottom: 1px solid transparent;
-    transition: background var(--dur) var(--ease), border-color var(--dur) var(--ease);
+    transition:
+      background var(--dur) var(--ease),
+      border-color var(--dur) var(--ease),
+      backdrop-filter var(--dur) var(--ease);
   }
 
   .site-nav.is-scrolled {
-    background: rgba(10, 10, 10, 0.82);
-    backdrop-filter: blur(10px);
+    background: rgba(244, 242, 238, 0.78);
+    backdrop-filter: blur(14px) saturate(1.2);
     border-bottom-color: var(--line-soft);
   }
 
@@ -68,24 +74,36 @@ const links = [
 
   .site-nav__mark {
     font-family: var(--font-display);
-    font-size: 1.15rem;
-    letter-spacing: 0.06em;
-    color: var(--off-white);
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+
+  .site-nav__mark-dot {
+    color: var(--ink-faint);
   }
 
   .site-nav__links {
     display: none;
     align-items: center;
     gap: clamp(1.5rem, 3vw, 2.75rem);
-    font-size: var(--text-small);
-    letter-spacing: 0.04em;
-    color: var(--ink-soft);
+    font-family: var(--font-mono);
+    font-size: var(--text-tiny);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-mid);
   }
 
   .site-nav__links a {
     position: relative;
-    padding-block: 0.3rem;
-    transition: color var(--dur) var(--ease);
+    padding-block: 0.4rem;
+    overflow: hidden;
+  }
+
+  .site-nav__links a span {
+    display: inline-block;
+    transition: transform 0.45s var(--ease-out-expo);
   }
 
   .site-nav__links a::after {
@@ -96,11 +114,13 @@ const links = [
     bottom: 0;
     height: 1px;
     background: var(--metal-gradient);
-    transition: right var(--dur-slow) var(--ease-soft);
+    background-size: 4rem 100%;
+    transition: right 0.5s var(--ease-out-expo);
   }
 
-  .site-nav__links a:hover {
-    color: var(--off-white);
+  .site-nav__links a:hover span {
+    transform: translateY(-2px);
+    color: var(--ink);
   }
 
   .site-nav__links a:hover::after {
@@ -109,8 +129,7 @@ const links = [
 
   .site-nav__cta {
     display: none;
-    padding: 0.7em 1.4em;
-    font-size: var(--text-tiny);
+    padding: 0.65em 1.5em;
   }
 
   .site-nav__toggle {
@@ -118,37 +137,39 @@ const links = [
     flex-direction: column;
     justify-content: center;
     gap: 5px;
-    width: 2.25rem;
-    height: 2.25rem;
+    width: 2.5rem;
+    height: 2.5rem;
   }
 
   .site-nav__toggle span {
     display: block;
-    height: 1px;
-    background: var(--silver);
-    transition: transform var(--dur) var(--ease), opacity var(--dur) var(--ease);
+    height: 1.5px;
+    width: 100%;
+    background: var(--ink);
+    transition: transform 0.4s var(--ease), opacity 0.3s var(--ease);
   }
 
   .site-nav__toggle[aria-expanded='true'] span:first-child {
-    transform: translateY(3px) rotate(45deg);
+    transform: translateY(3.25px) rotate(45deg);
   }
 
   .site-nav__toggle[aria-expanded='true'] span:last-child {
-    transform: translateY(-3px) rotate(-45deg);
+    transform: translateY(-3.25px) rotate(-45deg);
   }
 
   .site-nav__mobile {
     position: fixed;
     inset: var(--nav-height) 0 0 0;
-    background: rgba(10, 10, 10, 0.98);
+    background: rgba(244, 242, 238, 0.98);
+    backdrop-filter: blur(12px);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 2rem;
+    gap: 1.75rem;
     font-family: var(--font-display);
-    font-size: 1.75rem;
-    transform: translateY(-8px);
+    font-size: 2rem;
+    transform: translateY(-10px);
     opacity: 0;
     pointer-events: none;
     transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
@@ -158,6 +179,18 @@ const links = [
     opacity: 1;
     transform: translateY(0);
     pointer-events: auto;
+  }
+
+  .site-nav__mobile-cta {
+    margin-top: 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 0.9em 2em;
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: var(--radius);
   }
 
   @media (min-width: 900px) {
@@ -172,26 +205,21 @@ const links = [
 </style>
 
 <script>
-  const nav = document.getElementById('site-nav');
   const toggle = document.getElementById('nav-toggle');
   const mobile = document.getElementById('nav-mobile');
-
-  const onScroll = () => {
-    nav?.classList.toggle('is-scrolled', window.scrollY > 40);
-  };
-  onScroll();
-  window.addEventListener('scroll', onScroll, { passive: true });
 
   toggle?.addEventListener('click', () => {
     const expanded = toggle.getAttribute('aria-expanded') === 'true';
     toggle.setAttribute('aria-expanded', String(!expanded));
     mobile?.classList.toggle('is-open', !expanded);
+    document.body.style.overflow = !expanded ? 'hidden' : '';
   });
 
   mobile?.querySelectorAll('a').forEach((a) => {
     a.addEventListener('click', () => {
       toggle?.setAttribute('aria-expanded', 'false');
       mobile.classList.remove('is-open');
+      document.body.style.overflow = '';
     });
   });
 </script>

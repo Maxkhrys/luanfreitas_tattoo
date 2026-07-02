@@ -1,6 +1,8 @@
-<a href="#booking" id="sticky-book" class="sticky-book" aria-label="Book a consultation">
-  <span class="sticky-book__dot" aria-hidden="true"></span>
-  Book
+<a href="#booking" id="sticky-book" class="sticky-book" aria-label="Book a consultation" data-magnetic data-magnetic-strength="0.4">
+  <span class="sticky-book__inner">
+    <span class="sticky-book__dot" aria-hidden="true"></span>
+    Book
+  </span>
 </a>
 
 <style>
@@ -11,49 +13,58 @@
     z-index: 800;
     display: inline-flex;
     align-items: center;
-    gap: 0.55em;
-    padding: 0.9em 1.5em;
-    font-size: var(--text-small);
-    font-weight: 600;
-    letter-spacing: 0.08em;
+    justify-content: center;
+    padding: 1em 1.6em;
+    font-family: var(--font-mono);
+    font-size: var(--text-tiny);
+    font-weight: 500;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--near-black);
-    background: var(--metal-gradient);
-    background-size: 220% 100%;
-    background-position: 30% 50%;
+    color: var(--paper);
+    background: var(--ink);
     border-radius: 999px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(199, 201, 207, 0.25);
+    box-shadow: 0 12px 34px -12px rgba(17, 17, 19, 0.55);
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(14px) scale(0.96);
     pointer-events: none;
     transition:
-      opacity var(--dur-slow) var(--ease-soft),
-      transform var(--dur-slow) var(--ease-soft),
-      background-position var(--dur) var(--ease),
+      opacity 0.7s var(--ease-out-expo),
+      transform 0.7s var(--ease-out-expo),
       box-shadow var(--dur) var(--ease);
   }
 
   .sticky-book.is-visible {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
     pointer-events: auto;
   }
 
   .sticky-book:hover {
-    background-position: 70% 50%;
-    box-shadow: 0 10px 34px rgba(0, 0, 0, 0.5), 0 0 24px rgba(230, 232, 236, 0.3);
+    box-shadow: 0 16px 40px -12px rgba(17, 17, 19, 0.6);
+  }
+
+  .sticky-book__inner {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6em;
   }
 
   .sticky-book__dot {
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: var(--near-black);
+    background: var(--paper);
+    animation: sticky-pulse 2.4s var(--ease-soft) infinite;
   }
 
-  @media (min-width: 900px) {
-    .sticky-book {
-      padding: 1em 1.75em;
+  @keyframes sticky-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.8); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sticky-book__dot {
+      animation: none;
     }
   }
 </style>
