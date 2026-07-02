@@ -1,17 +1,28 @@
 ---
-const categories = ['All', 'Portraits', 'Statuary', 'Animals', 'Religious'];
+import { Image } from 'astro:assets';
+import jokerSleeve from '../assets/portfolio/joker-sleeve.png';
+import saintsSleeve from '../assets/portfolio/saints-sleeve.png';
+import virginMary from '../assets/portfolio/virgin-mary-rose.png';
+import jesusCrown from '../assets/portfolio/jesus-crown-of-thorns.png';
+import apePortrait from '../assets/portfolio/ape-portrait.png';
+import archangelMichael from '../assets/portfolio/archangel-michael.png';
+import marbleGoddess from '../assets/portfolio/marble-goddess.png';
+import medusa from '../assets/portfolio/medusa.png';
+import jokerPortrait from '../assets/portfolio/joker-portrait.png';
 
 const pieces = [
-  { category: 'Portraits', ratio: '4/5', tall: true },
-  { category: 'Statuary', ratio: '4/5', tall: false },
-  { category: 'Animals', ratio: '4/5', tall: false },
-  { category: 'Religious', ratio: '4/5', tall: true },
-  { category: 'Portraits', ratio: '4/5', tall: false },
-  { category: 'Statuary', ratio: '4/5', tall: true },
-  { category: 'Animals', ratio: '4/5', tall: false },
-  { category: 'Religious', ratio: '4/5', tall: false },
-  { category: 'Portraits', ratio: '4/5', tall: true },
+  { src: jokerSleeve, alt: 'Full sleeve realism piece — Joker, "why so serious"', category: 'Portraits', tall: true },
+  { src: saintsSleeve, alt: 'Full sleeve realism piece — Christ and saints', category: 'Religious', tall: true },
+  { src: medusa, alt: 'Realism portrait — Medusa', category: 'Statuary', tall: false },
+  { src: jesusCrown, alt: 'Realism portrait — Christ, crown of thorns', category: 'Religious', tall: false },
+  { src: apePortrait, alt: 'Realism portrait — ape character study', category: 'Portraits', tall: false },
+  { src: archangelMichael, alt: 'Realism piece — Archangel Michael', category: 'Religious', tall: true },
+  { src: marbleGoddess, alt: 'Realism piece — marble goddess bust', category: 'Statuary', tall: false },
+  { src: virginMary, alt: 'Realism portrait — Virgin Mary with rose', category: 'Religious', tall: false },
+  { src: jokerPortrait, alt: 'Realism portrait — Joker', category: 'Portraits', tall: false },
 ];
+
+const categories = ['All', ...Array.from(new Set(pieces.map((p) => p.category)))];
 ---
 
 <section id="portfolio" class="section bg-charcoal">
@@ -22,8 +33,8 @@ const pieces = [
         <span class="metallic-text" data-sheen>Selected Work</span>
       </h2>
       <p class="lede portfolio__lede">
-        A working archive of black &amp; grey realism — portraits, statuary, animals and religious
-        iconography. Full-resolution pieces will replace these placeholders once photography is delivered.
+        A working archive of black &amp; grey realism — portraits, statuary and religious
+        iconography. More pieces are added as new photography comes in.
       </p>
     </div>
 
@@ -54,10 +65,7 @@ const pieces = [
           aria-label={`Open piece ${i + 1}, ${p.category}`}
         >
           <figure data-media class="portfolio__fig">
-            <div class="placeholder-fig" style={`--ph-ratio: ${p.ratio}`}>
-              <span class="placeholder-badge">Placeholder</span>
-              <span class="placeholder-fig__label">{p.category}<br />awaiting photography</span>
-            </div>
+            <Image src={p.src} alt={p.alt} widths={[400, 700, 1000]} sizes="(min-width: 700px) 33vw, 50vw" loading="lazy" />
           </figure>
         </button>
       ))}
@@ -68,10 +76,7 @@ const pieces = [
 <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Portfolio piece viewer" hidden>
   <button type="button" class="lightbox__close" id="lightbox-close" aria-label="Close">&times;</button>
   <div class="lightbox__stage">
-    <div class="placeholder-fig lightbox__image" style="--ph-ratio: 4/5">
-      <span class="placeholder-badge">Placeholder</span>
-      <span class="placeholder-fig__label" id="lightbox-label">Portfolio piece<br />awaiting photography</span>
-    </div>
+    <img id="lightbox-image" class="lightbox__image" src="" alt="" />
   </div>
 </div>
 
@@ -141,6 +146,12 @@ const pieces = [
   .portfolio__fig {
     margin: 0;
     cursor: zoom-in;
+    aspect-ratio: 3 / 4;
+  }
+
+  .portfolio__fig :global(img) {
+    width: 100%;
+    height: 100%;
   }
 
   @media (min-width: 700px) {
@@ -150,8 +161,8 @@ const pieces = [
     .portfolio__item--tall {
       grid-row: span 2;
     }
-    .portfolio__item--tall .placeholder-fig {
-      --ph-ratio: 4/6.5;
+    .portfolio__item--tall .portfolio__fig {
+      aspect-ratio: 3 / 6.2;
     }
   }
 
@@ -174,11 +185,14 @@ const pieces = [
   }
 
   .lightbox__stage {
-    width: min(100%, 42rem);
+    width: min(100%, 36rem);
   }
 
   .lightbox__image {
     width: 100%;
+    height: auto;
+    border-radius: var(--radius-lg);
+    filter: grayscale(1) contrast(1.05);
   }
 
   .lightbox__close {
@@ -224,14 +238,16 @@ const pieces = [
   });
 
   const lightbox = document.getElementById('lightbox');
-  const lightboxLabel = document.getElementById('lightbox-label');
+  const lightboxImage = document.getElementById('lightbox-image') as HTMLImageElement | null;
   const lightboxClose = document.getElementById('lightbox-close');
   let lastFocused: HTMLElement | null = null;
 
   const openLightbox = (item: HTMLButtonElement) => {
     lastFocused = item;
-    if (lightboxLabel) {
-      lightboxLabel.innerHTML = `${item.dataset.category}<br />awaiting photography`;
+    const img = item.querySelector('img');
+    if (lightboxImage && img) {
+      lightboxImage.src = img.currentSrc || img.src;
+      lightboxImage.alt = img.alt;
     }
     lightbox?.removeAttribute('hidden');
     lightboxClose?.focus();

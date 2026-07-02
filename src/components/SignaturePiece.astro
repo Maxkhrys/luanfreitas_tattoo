@@ -1,3 +1,8 @@
+---
+import { Image } from 'astro:assets';
+import archangelMichael from '../assets/portfolio/archangel-michael.png';
+---
+
 <section id="signature" class="signature bg-near-black" data-signature-section>
   <div class="signature__pin" data-signature-pin>
     <div class="signature__eyebrow-row">
@@ -5,15 +10,18 @@
     </div>
 
     <div class="signature__frame" data-signature-frame>
-      <div class="placeholder-fig signature__image" style="--ph-ratio: 16/10">
-        <span class="placeholder-badge">Placeholder — highest-detail piece supplied</span>
-        <span class="placeholder-fig__label">Full back piece, black &amp; grey realism<br />awaiting final photography</span>
-      </div>
+      <Image
+        class="signature__image"
+        src={archangelMichael}
+        alt="Realism forearm piece — Archangel Michael, wings and chains beneath a radiant halo"
+        widths={[500, 900, 1400]}
+        sizes="(min-width: 900px) 64rem, 100vw"
+      />
     </div>
 
     <div class="signature__caption" data-signature-caption>
-      <h3 class="signature__title">[Placeholder: piece title]</h3>
-      <p class="signature__meta">[Placeholder: placement &middot; session count &middot; year]</p>
+      <h3 class="signature__title">Archangel Michael</h3>
+      <p class="signature__meta">Forearm &middot; black &amp; grey realism</p>
     </div>
   </div>
 </section>
@@ -40,13 +48,18 @@
   }
 
   .signature__frame {
-    width: min(100%, 64rem);
+    width: min(100%, 34rem);
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
     will-change: transform, clip-path;
   }
 
   .signature__image {
     width: 100%;
     height: 100%;
+    object-fit: cover;
+    filter: grayscale(1) contrast(1.05);
   }
 
   .signature__caption {
