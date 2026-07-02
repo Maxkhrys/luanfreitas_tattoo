@@ -1,0 +1,104 @@
+---
+const links = [
+  { href: '#portfolio', label: 'Portfolio' },
+  { href: '#about', label: 'About' },
+  { href: '#process', label: 'Process' },
+  { href: '#booking', label: 'Book' },
+];
+---
+
+<footer class="site-footer bg-near-black">
+  <div class="wrap site-footer__inner">
+    <div class="site-footer__top">
+      <span class="site-footer__mark">Luan Freitas</span>
+      <a class="btn btn--ghost" href="#booking">Book a Consultation</a>
+    </div>
+
+    <div class="metal-rule site-footer__rule" aria-hidden="true"></div>
+
+    <div class="site-footer__grid">
+      <nav class="site-footer__nav" aria-label="Footer">
+        {links.map((l) => (
+          <a href={l.href}>{l.label}</a>
+        ))}
+      </nav>
+
+      <div class="site-footer__contact">
+        <a href="https://instagram.com/luanfreitas_tattoo" target="_blank" rel="noopener noreferrer">
+          @luanfreitas_tattoo
+        </a>
+        <p>[Placeholder: studio address]</p>
+        <p>[Placeholder: studio hours]</p>
+      </div>
+    </div>
+
+    <p class="site-footer__legal">&copy; {new Date().getFullYear()} Luan Freitas Tattoo, Dublin. All rights reserved.</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    padding-block: clamp(3rem, 6vw, 5rem) 2rem;
+  }
+
+  .site-footer__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .site-footer__mark {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    color: var(--off-white);
+  }
+
+  .site-footer__rule {
+    margin-block: 2.5rem;
+  }
+
+  .site-footer__grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .site-footer__nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    font-size: var(--text-small);
+    color: var(--ink-soft);
+  }
+
+  .site-footer__nav a:hover {
+    color: var(--off-white);
+  }
+
+  .site-footer__contact {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    font-size: var(--text-small);
+    color: var(--ink-mid);
+    text-align: right;
+  }
+
+  .site-footer__contact a {
+    color: var(--silver);
+  }
+
+  .site-footer__contact a:hover {
+    color: var(--off-white);
+  }
+
+  .site-footer__legal {
+    margin-top: 3rem;
+    font-size: var(--text-tiny);
+    color: var(--ink-faint);
+    text-align: center;
+  }
+</style>

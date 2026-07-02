@@ -1,0 +1,197 @@
+---
+const links = [
+  { href: '#portfolio', label: 'Portfolio' },
+  { href: '#about', label: 'About' },
+  { href: '#process', label: 'Process' },
+  { href: '#booking', label: 'Book' },
+];
+---
+
+<header id="site-nav" class="site-nav">
+  <div class="wrap site-nav__inner">
+    <a href="#top" class="site-nav__mark">Luan Freitas</a>
+
+    <nav class="site-nav__links" aria-label="Primary">
+      {links.map((l) => (
+        <a href={l.href}>{l.label}</a>
+      ))}
+    </nav>
+
+    <a href="#booking" class="btn btn--metal site-nav__cta">Book Consultation</a>
+
+    <button
+      id="nav-toggle"
+      class="site-nav__toggle"
+      aria-expanded="false"
+      aria-controls="nav-mobile"
+      aria-label="Toggle menu"
+    >
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+
+  <nav id="nav-mobile" class="site-nav__mobile" aria-label="Mobile">
+    {links.map((l) => (
+      <a href={l.href}>{l.label}</a>
+    ))}
+  </nav>
+</header>
+
+<style>
+  .site-nav {
+    position: fixed;
+    inset-inline: 0;
+    top: 0;
+    z-index: 900;
+    height: var(--nav-height);
+    display: flex;
+    align-items: center;
+    background: transparent;
+    border-bottom: 1px solid transparent;
+    transition: background var(--dur) var(--ease), border-color var(--dur) var(--ease);
+  }
+
+  .site-nav.is-scrolled {
+    background: rgba(10, 10, 10, 0.82);
+    backdrop-filter: blur(10px);
+    border-bottom-color: var(--line-soft);
+  }
+
+  .site-nav__inner {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+
+  .site-nav__mark {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    letter-spacing: 0.06em;
+    color: var(--off-white);
+  }
+
+  .site-nav__links {
+    display: none;
+    align-items: center;
+    gap: clamp(1.5rem, 3vw, 2.75rem);
+    font-size: var(--text-small);
+    letter-spacing: 0.04em;
+    color: var(--ink-soft);
+  }
+
+  .site-nav__links a {
+    position: relative;
+    padding-block: 0.3rem;
+    transition: color var(--dur) var(--ease);
+  }
+
+  .site-nav__links a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 100%;
+    bottom: 0;
+    height: 1px;
+    background: var(--metal-gradient);
+    transition: right var(--dur-slow) var(--ease-soft);
+  }
+
+  .site-nav__links a:hover {
+    color: var(--off-white);
+  }
+
+  .site-nav__links a:hover::after {
+    right: 0;
+  }
+
+  .site-nav__cta {
+    display: none;
+    padding: 0.7em 1.4em;
+    font-size: var(--text-tiny);
+  }
+
+  .site-nav__toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  .site-nav__toggle span {
+    display: block;
+    height: 1px;
+    background: var(--silver);
+    transition: transform var(--dur) var(--ease), opacity var(--dur) var(--ease);
+  }
+
+  .site-nav__toggle[aria-expanded='true'] span:first-child {
+    transform: translateY(3px) rotate(45deg);
+  }
+
+  .site-nav__toggle[aria-expanded='true'] span:last-child {
+    transform: translateY(-3px) rotate(-45deg);
+  }
+
+  .site-nav__mobile {
+    position: fixed;
+    inset: var(--nav-height) 0 0 0;
+    background: rgba(10, 10, 10, 0.98);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    font-family: var(--font-display);
+    font-size: 1.75rem;
+    transform: translateY(-8px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+  }
+
+  .site-nav__mobile.is-open {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  @media (min-width: 900px) {
+    .site-nav__links,
+    .site-nav__cta {
+      display: flex;
+    }
+    .site-nav__toggle {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  const nav = document.getElementById('site-nav');
+  const toggle = document.getElementById('nav-toggle');
+  const mobile = document.getElementById('nav-mobile');
+
+  const onScroll = () => {
+    nav?.classList.toggle('is-scrolled', window.scrollY > 40);
+  };
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  toggle?.addEventListener('click', () => {
+    const expanded = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!expanded));
+    mobile?.classList.toggle('is-open', !expanded);
+  });
+
+  mobile?.querySelectorAll('a').forEach((a) => {
+    a.addEventListener('click', () => {
+      toggle?.setAttribute('aria-expanded', 'false');
+      mobile.classList.remove('is-open');
+    });
+  });
+</script>

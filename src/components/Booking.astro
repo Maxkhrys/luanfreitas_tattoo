@@ -1,0 +1,194 @@
+<section id="booking" class="section bg-charcoal">
+  <div class="wrap booking">
+    <div class="booking__copy" data-reveal>
+      <p class="eyebrow">Booking</p>
+      <h2 class="booking__title">
+        <span class="metallic-text" data-sheen>Start a Consultation</span>
+      </h2>
+      <p class="lede">
+        Tell Luan about the piece you're planning. Every enquiry is reviewed personally before a
+        consultation is scheduled.
+      </p>
+
+      <a
+        class="booking__ig"
+        href="https://instagram.com/luanfreitas_tattoo"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <span class="metal-rule booking__ig-line" aria-hidden="true"></span>
+        <span>Prefer Instagram? DM <strong>@luanfreitas_tattoo</strong></span>
+      </a>
+
+      <p class="booking__note">[Placeholder: studio address / hours — supplied]</p>
+    </div>
+
+    <form id="booking-form" class="booking__form" data-reveal novalidate>
+      <div id="booking-fields" class="booking__fields">
+      <div class="booking__grid">
+        <div class="field">
+          <label for="bf-name">Name</label>
+          <input id="bf-name" name="name" type="text" autocomplete="name" required />
+        </div>
+        <div class="field">
+          <label for="bf-contact">Email or phone</label>
+          <input id="bf-contact" name="contact" type="text" autocomplete="email" required />
+        </div>
+      </div>
+
+      <div class="booking__grid">
+        <div class="field">
+          <label for="bf-placement">Placement</label>
+          <select id="bf-placement" name="placement" required>
+            <option value="" disabled selected>Select placement</option>
+            <option>Arm — full sleeve</option>
+            <option>Arm — half sleeve</option>
+            <option>Back — full piece</option>
+            <option>Chest</option>
+            <option>Leg</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="bf-size">Approximate size</label>
+          <select id="bf-size" name="size" required>
+            <option value="" disabled selected>Select size</option>
+            <option>Small (palm-sized)</option>
+            <option>Medium (forearm)</option>
+            <option>Large (full sleeve / back)</option>
+            <option>Not sure yet</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="bf-concept">Concept</label>
+        <textarea id="bf-concept" name="concept" rows="4" required
+          placeholder="Describe the piece — subject, style references, any existing work nearby."></textarea>
+      </div>
+
+      <div class="field">
+        <label for="bf-reference">Reference images</label>
+        <input id="bf-reference" name="reference" type="file" accept="image/*" multiple />
+        <span class="booking__file-note">[Placeholder: upload wired to booking backend]</span>
+      </div>
+
+      <button type="submit" class="btn btn--metal booking__submit">Request Consultation</button>
+      </div>
+
+      <p id="booking-success" class="booking__success" role="status" hidden>
+        Thank you — your enquiry has been noted. [Placeholder: connect this form to a live booking
+        backend before launch.]
+      </p>
+    </form>
+  </div>
+</section>
+
+<style>
+  .booking {
+    display: grid;
+    gap: clamp(2.5rem, 6vw, 5rem);
+  }
+
+  .booking__title {
+    margin-top: 0.5rem;
+    font-size: var(--text-h2);
+  }
+
+  .booking__copy .lede {
+    margin-top: 1rem;
+  }
+
+  .booking__ig {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 2.5rem;
+    max-width: 22rem;
+    font-size: var(--text-small);
+    color: var(--ink-soft);
+    transition: color var(--dur) var(--ease);
+  }
+
+  .booking__ig:hover {
+    color: var(--off-white);
+  }
+
+  .booking__ig-line {
+    width: 2.5rem;
+  }
+
+  .booking__note {
+    margin-top: 1.75rem;
+    font-size: var(--text-small);
+    font-style: italic;
+    color: var(--ink-faint);
+  }
+
+  .booking__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    padding: clamp(1.5rem, 3.5vw, 2.5rem);
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--line-soft);
+    border-radius: var(--radius-lg);
+  }
+
+  .booking__fields {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .booking__grid {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .booking__file-note {
+    font-size: 0.72rem;
+    color: var(--ink-faint);
+    font-style: italic;
+  }
+
+  .booking__submit {
+    margin-top: 0.5rem;
+    width: 100%;
+    padding-block: 1.05em;
+  }
+
+  .booking__success {
+    font-size: var(--text-small);
+    color: var(--silver);
+    text-align: center;
+  }
+
+  @media (min-width: 700px) {
+    .booking__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (min-width: 900px) {
+    .booking {
+      grid-template-columns: 0.85fr 1.15fr;
+    }
+  }
+</style>
+
+<script>
+  const form = document.getElementById('booking-form') as HTMLFormElement | null;
+  const fields = document.getElementById('booking-fields');
+  const success = document.getElementById('booking-success');
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+    if (fields) fields.hidden = true;
+    success?.removeAttribute('hidden');
+  });
+</script>

@@ -1,0 +1,73 @@
+<a href="#booking" id="sticky-book" class="sticky-book" aria-label="Book a consultation">
+  <span class="sticky-book__dot" aria-hidden="true"></span>
+  Book
+</a>
+
+<style>
+  .sticky-book {
+    position: fixed;
+    right: clamp(1rem, 3vw, 2rem);
+    bottom: clamp(1rem, 3vw, 2rem);
+    z-index: 800;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55em;
+    padding: 0.9em 1.5em;
+    font-size: var(--text-small);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--near-black);
+    background: var(--metal-gradient);
+    background-size: 220% 100%;
+    background-position: 30% 50%;
+    border-radius: 999px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(199, 201, 207, 0.25);
+    opacity: 0;
+    transform: translateY(12px);
+    pointer-events: none;
+    transition:
+      opacity var(--dur-slow) var(--ease-soft),
+      transform var(--dur-slow) var(--ease-soft),
+      background-position var(--dur) var(--ease),
+      box-shadow var(--dur) var(--ease);
+  }
+
+  .sticky-book.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .sticky-book:hover {
+    background-position: 70% 50%;
+    box-shadow: 0 10px 34px rgba(0, 0, 0, 0.5), 0 0 24px rgba(230, 232, 236, 0.3);
+  }
+
+  .sticky-book__dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--near-black);
+  }
+
+  @media (min-width: 900px) {
+    .sticky-book {
+      padding: 1em 1.75em;
+    }
+  }
+</style>
+
+<script>
+  const stickyBook = document.getElementById('sticky-book');
+  const hero = document.getElementById('hero');
+
+  if (stickyBook && hero) {
+    const observer = new IntersectionObserver(([entry]) => {
+      stickyBook.classList.toggle('is-visible', !entry.isIntersecting);
+    });
+    observer.observe(hero);
+  } else {
+    stickyBook?.classList.add('is-visible');
+  }
+</script>

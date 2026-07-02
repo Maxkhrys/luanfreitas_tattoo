@@ -1,0 +1,256 @@
+---
+const categories = ['All', 'Portraits', 'Statuary', 'Animals', 'Religious'];
+
+const pieces = [
+  { category: 'Portraits', ratio: '4/5', tall: true },
+  { category: 'Statuary', ratio: '4/5', tall: false },
+  { category: 'Animals', ratio: '4/5', tall: false },
+  { category: 'Religious', ratio: '4/5', tall: true },
+  { category: 'Portraits', ratio: '4/5', tall: false },
+  { category: 'Statuary', ratio: '4/5', tall: true },
+  { category: 'Animals', ratio: '4/5', tall: false },
+  { category: 'Religious', ratio: '4/5', tall: false },
+  { category: 'Portraits', ratio: '4/5', tall: true },
+];
+---
+
+<section id="portfolio" class="section bg-charcoal">
+  <div class="wrap">
+    <div class="portfolio__head" data-reveal>
+      <p class="eyebrow">Portfolio</p>
+      <h2 class="portfolio__title">
+        <span class="metallic-text" data-sheen>Selected Work</span>
+      </h2>
+      <p class="lede portfolio__lede">
+        A working archive of black &amp; grey realism — portraits, statuary, animals and religious
+        iconography. Full-resolution pieces will replace these placeholders once photography is delivered.
+      </p>
+    </div>
+
+    <div class="portfolio__filters" data-reveal role="tablist" aria-label="Filter portfolio by subject">
+      {categories.map((c, i) => (
+        <button
+          type="button"
+          class="portfolio__filter"
+          class:list={[{ 'is-active': i === 0 }]}
+          data-filter={c}
+          role="tab"
+          aria-selected={i === 0 ? 'true' : 'false'}
+        >
+          {c}
+        </button>
+      ))}
+    </div>
+
+    <div class="portfolio__grid" id="portfolio-grid">
+      {pieces.map((p, i) => (
+        <button
+          type="button"
+          class="portfolio__item"
+          class:list={[{ 'portfolio__item--tall': p.tall }]}
+          data-reveal
+          data-category={p.category}
+          data-index={i}
+          aria-label={`Open piece ${i + 1}, ${p.category}`}
+        >
+          <figure data-media class="portfolio__fig">
+            <div class="placeholder-fig" style={`--ph-ratio: ${p.ratio}`}>
+              <span class="placeholder-badge">Placeholder</span>
+              <span class="placeholder-fig__label">{p.category}<br />awaiting photography</span>
+            </div>
+          </figure>
+        </button>
+      ))}
+    </div>
+  </div>
+</section>
+
+<div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Portfolio piece viewer" hidden>
+  <button type="button" class="lightbox__close" id="lightbox-close" aria-label="Close">&times;</button>
+  <div class="lightbox__stage">
+    <div class="placeholder-fig lightbox__image" style="--ph-ratio: 4/5">
+      <span class="placeholder-badge">Placeholder</span>
+      <span class="placeholder-fig__label" id="lightbox-label">Portfolio piece<br />awaiting photography</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .portfolio__head {
+    max-width: 40rem;
+  }
+
+  .portfolio__title {
+    margin-top: 0.5rem;
+    font-size: var(--text-h2);
+  }
+
+  .portfolio__lede {
+    margin-top: 1rem;
+  }
+
+  .portfolio__filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: clamp(2rem, 5vw, 3rem);
+  }
+
+  .portfolio__filter {
+    padding: 0.55em 1.1em;
+    font-size: var(--text-tiny);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-mid);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    transition: color var(--dur) var(--ease), border-color var(--dur) var(--ease), background var(--dur) var(--ease);
+  }
+
+  .portfolio__filter:hover {
+    color: var(--off-white);
+    border-color: var(--silver-dim);
+  }
+
+  .portfolio__filter.is-active {
+    color: var(--near-black);
+    background: var(--silver);
+    border-color: var(--silver);
+  }
+
+  .portfolio__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(0.75rem, 1.8vw, 1.5rem);
+    margin-top: clamp(2rem, 5vw, 3rem);
+  }
+
+  .portfolio__item {
+    text-align: left;
+    display: block;
+  }
+
+  .portfolio__item[hidden] {
+    display: none;
+  }
+
+  .portfolio__item--tall {
+    grid-row: span 1;
+  }
+
+  .portfolio__fig {
+    margin: 0;
+    cursor: zoom-in;
+  }
+
+  @media (min-width: 700px) {
+    .portfolio__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .portfolio__item--tall {
+      grid-row: span 2;
+    }
+    .portfolio__item--tall .placeholder-fig {
+      --ph-ratio: 4/6.5;
+    }
+  }
+
+  /* ---------- Lightbox ---------- */
+
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(1.5rem, 6vw, 4rem);
+    background: rgba(6, 6, 6, 0.92);
+    backdrop-filter: blur(6px);
+  }
+
+  .lightbox[hidden] {
+    display: none;
+  }
+
+  .lightbox__stage {
+    width: min(100%, 42rem);
+  }
+
+  .lightbox__image {
+    width: 100%;
+  }
+
+  .lightbox__close {
+    position: absolute;
+    top: clamp(1rem, 3vw, 2rem);
+    right: clamp(1rem, 3vw, 2rem);
+    width: 2.75rem;
+    height: 2.75rem;
+    font-size: 1.75rem;
+    line-height: 1;
+    color: var(--silver);
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    transition: color var(--dur) var(--ease), border-color var(--dur) var(--ease);
+  }
+
+  .lightbox__close:hover {
+    color: var(--off-white);
+    border-color: var(--silver);
+  }
+</style>
+
+<script>
+  const grid = document.getElementById('portfolio-grid');
+  const filters = document.querySelectorAll<HTMLButtonElement>('.portfolio__filter');
+  const items = grid ? Array.from(grid.querySelectorAll<HTMLButtonElement>('.portfolio__item')) : [];
+
+  filters.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      filters.forEach((b) => {
+        b.classList.remove('is-active');
+        b.setAttribute('aria-selected', 'false');
+      });
+      btn.classList.add('is-active');
+      btn.setAttribute('aria-selected', 'true');
+
+      const filter = btn.dataset.filter;
+      items.forEach((item) => {
+        const match = filter === 'All' || item.dataset.category === filter;
+        item.hidden = !match;
+      });
+    });
+  });
+
+  const lightbox = document.getElementById('lightbox');
+  const lightboxLabel = document.getElementById('lightbox-label');
+  const lightboxClose = document.getElementById('lightbox-close');
+  let lastFocused: HTMLElement | null = null;
+
+  const openLightbox = (item: HTMLButtonElement) => {
+    lastFocused = item;
+    if (lightboxLabel) {
+      lightboxLabel.innerHTML = `${item.dataset.category}<br />awaiting photography`;
+    }
+    lightbox?.removeAttribute('hidden');
+    lightboxClose?.focus();
+  };
+
+  const closeLightbox = () => {
+    lightbox?.setAttribute('hidden', '');
+    lastFocused?.focus();
+  };
+
+  items.forEach((item) => {
+    item.addEventListener('click', () => openLightbox(item));
+  });
+
+  lightboxClose?.addEventListener('click', closeLightbox);
+  lightbox?.addEventListener('click', (e) => {
+    if (e.target === lightbox) closeLightbox();
+  });
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && lightbox && !lightbox.hasAttribute('hidden')) closeLightbox();
+  });
+</script>

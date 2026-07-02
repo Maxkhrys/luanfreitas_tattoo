@@ -1,0 +1,468 @@
+/* ---------------------------------------------------------------------------
+   Luan Freitas Tattoo — design system
+   Direction: monochrome gallery-grade. Black & grey realism discipline
+   translated into layout: tonal depth instead of colour, metallic silver
+   reserved strictly for wordmark/headers/CTAs, slow cinematic motion.
+   --------------------------------------------------------------------------- */
+
+@import "tailwindcss";
+@import "@fontsource-variable/fraunces";
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
+@import "@fontsource/inter/600.css";
+
+@theme {
+  --font-display: "Fraunces Variable", Georgia, serif;
+  --font-body: "Inter", system-ui, -apple-system, sans-serif;
+}
+
+:root {
+  /* ---- Tonal-depth greys (no colour, ever) ---- */
+  --near-black: #0a0a0a;
+  --charcoal: #161618;
+  --graphite: #202024;
+  --graphite-high: #2a2a2f;
+
+  --off-white: #f4f4f5;
+  --silver: #c7c9cf;
+  --silver-dim: rgba(199, 201, 207, 0.55);
+  --silver-faint: rgba(199, 201, 207, 0.18);
+
+  --ink: var(--off-white);
+  --ink-soft: rgba(244, 244, 245, 0.72);
+  --ink-mid: rgba(244, 244, 245, 0.52);
+  --ink-faint: rgba(244, 244, 245, 0.32);
+  --line: rgba(199, 201, 207, 0.16);
+  --line-soft: rgba(199, 201, 207, 0.08);
+
+  --bg: var(--near-black);
+
+  /* ---- Metallic gradient — reserved for wordmark / headers / key dividers / CTAs ---- */
+  --metal-1: #8e9299;
+  --metal-2: #e6e8ec;
+  --metal-3: #74777e;
+  --metal-gradient: linear-gradient(
+    110deg,
+    var(--metal-3) 0%,
+    var(--metal-1) 32%,
+    var(--metal-2) 52%,
+    var(--metal-1) 68%,
+    var(--metal-3) 100%
+  );
+
+  /* ---- Type scale ---- */
+  --text-hero: clamp(3rem, 9.5vw, 8rem);
+  --text-h2: clamp(2rem, 5vw, 3.6rem);
+  --text-statement: clamp(1.6rem, 4vw, 3rem);
+  --text-h3: clamp(1.25rem, 2.2vw, 1.75rem);
+  --text-body: clamp(1rem, 1vw, 1.08rem);
+  --text-small: 0.9rem;
+  --text-tiny: 0.78rem;
+  --text-eyebrow: clamp(0.7rem, 0.8vw, 0.76rem);
+
+  /* ---- Rhythm ---- */
+  --space-section: clamp(5.5rem, 13vw, 11rem);
+  --gutter: clamp(1.25rem, 4.5vw, 5rem);
+  --content-max: 84rem;
+  --radius: 2px;
+  --radius-lg: 6px;
+
+  /* ---- Motion — slow, cinematic, no bounce ---- */
+  --ease: cubic-bezier(0.65, 0, 0.1, 1);
+  --ease-soft: cubic-bezier(0.33, 1, 0.68, 1);
+  --dur: 0.6s;
+  --dur-slow: 1.1s;
+
+  --nav-height: 5.25rem;
+}
+
+/* ---------- Reset / base ---------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+html.lenis {
+  height: auto;
+  scroll-behavior: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  font-weight: 400;
+  line-height: 1.7;
+  color: var(--ink);
+  background-color: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img,
+picture,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+
+/* ---------- Tonal section backgrounds — depth without colour ---------- */
+
+.bg-near-black {
+  background: var(--near-black);
+}
+.bg-charcoal {
+  background: var(--charcoal);
+}
+.bg-graphite {
+  background: var(--graphite);
+}
+
+.tonal-transition-down {
+  background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.35));
+  height: clamp(3rem, 8vw, 6rem);
+  margin-bottom: calc(clamp(3rem, 8vw, 6rem) * -1);
+  pointer-events: none;
+}
+
+/* ---------- Film grain — extremely subtle, cohesion not texture ---------- */
+
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  pointer-events: none;
+  opacity: 0.025;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+
+/* ---------- Layout helpers ---------- */
+
+.wrap {
+  width: 100%;
+  max-width: var(--content-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  padding-block: var(--space-section);
+  position: relative;
+}
+
+/* Soft blended edge between adjacent tonal sections — depth without colour. */
+.section::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: clamp(4rem, 10vw, 8rem);
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.22), transparent);
+  pointer-events: none;
+}
+
+.eyebrow {
+  font-size: var(--text-eyebrow);
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--silver);
+  font-weight: 500;
+}
+
+.lede {
+  font-size: clamp(1.05rem, 1.5vw, 1.3rem);
+  color: var(--ink-soft);
+  line-height: 1.65;
+}
+
+/* ---------- Metallic type treatment ---------- */
+
+.metallic-text {
+  background: var(--metal-gradient);
+  background-size: 220% 100%;
+  background-position: 0% 50%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+  position: relative;
+}
+
+/* Sheen sweep — one soft light band, once per element, driven by JS adding
+   .sheen-run when the element enters the viewport. Pure-CSS fallback for
+   no-JS just shows the static gradient (still reads as "metallic"). */
+.metallic-text.sheen-run {
+  animation: metal-sheen 1.2s var(--ease-soft) 1;
+}
+
+@keyframes metal-sheen {
+  0% {
+    background-position: 120% 50%;
+  }
+  100% {
+    background-position: -20% 50%;
+  }
+}
+
+.metal-rule {
+  height: 1px;
+  background: var(--metal-gradient);
+  background-size: 220% 100%;
+  opacity: 0.6;
+}
+
+/* ---------- Buttons ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6em;
+  padding: 0.95em 1.9em;
+  font-family: var(--font-body);
+  font-size: var(--text-small);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  transition:
+    background var(--dur) var(--ease),
+    color var(--dur) var(--ease),
+    border-color var(--dur) var(--ease),
+    transform var(--dur) var(--ease),
+    box-shadow var(--dur) var(--ease);
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn--metal {
+  background: var(--metal-gradient);
+  background-size: 220% 100%;
+  background-position: 30% 50%;
+  color: var(--near-black);
+  box-shadow: 0 0 0 1px rgba(199, 201, 207, 0.25);
+}
+
+.btn--metal:hover {
+  background-position: 70% 50%;
+  box-shadow: 0 0 24px rgba(230, 232, 236, 0.25);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--line);
+}
+
+.btn--ghost:hover {
+  border-color: var(--silver);
+  color: var(--off-white);
+}
+
+/* ---------- Forms ---------- */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.field label {
+  font-size: var(--text-tiny);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-mid);
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  padding: 0.9em 1em;
+  font: inherit;
+  font-size: var(--text-small);
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  transition: border-color var(--dur) var(--ease), background var(--dur) var(--ease);
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: var(--ink-faint);
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--silver);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.field select option {
+  background: var(--charcoal);
+  color: var(--ink);
+}
+
+/* ---------- Media figures (shared reveal target) ---------- */
+
+figure[data-media] {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  border: 1px solid transparent;
+  transition: border-color var(--dur-slow) var(--ease);
+}
+
+figure[data-media] img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.05);
+  transition: transform 1.4s var(--ease-soft);
+}
+
+figure[data-media]:hover {
+  border-color: var(--silver-faint);
+}
+
+figure[data-media].is-revealed:hover img {
+  transform: scale(1.045);
+}
+
+.placeholder-fig {
+  aspect-ratio: var(--ph-ratio, 4 / 5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(155deg, var(--graphite) 0%, var(--charcoal) 100%);
+  border: 1px dashed var(--line);
+  border-radius: var(--radius-lg);
+  color: var(--ink-faint);
+  text-align: center;
+  padding: 1.5rem;
+}
+
+.placeholder-fig__label {
+  font-size: var(--text-tiny);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  line-height: 1.6;
+}
+
+.placeholder-badge {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 3;
+  padding: 0.3em 0.7em;
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--near-black);
+  background: rgba(244, 244, 245, 0.88);
+  border-radius: 999px;
+  backdrop-filter: blur(4px);
+}
+
+/* ---------- Animation gates ----------
+   Elements pre-hide ONLY when JS is available, so no-JS visitors always
+   see content. main.ts animates them in (or clears under reduced-motion). */
+
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .js [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ---------- Accessibility ---------- */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+:focus-visible {
+  outline: 2px solid var(--silver);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -3rem;
+  z-index: 3000;
+  padding: 0.6em 1em;
+  background: var(--off-white);
+  color: var(--near-black);
+  border-radius: var(--radius);
+  transition: top var(--dur) var(--ease);
+}
+
+.skip-link:focus {
+  top: 1rem;
+}

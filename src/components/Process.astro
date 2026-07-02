@@ -1,0 +1,121 @@
+---
+const steps = [
+  {
+    n: '01',
+    title: 'Consultation',
+    body: 'A conversation about concept, placement, scale and reference imagery — in person or via DM — to establish whether the piece is right for realism treatment.',
+  },
+  {
+    n: '02',
+    title: 'Custom Design',
+    body: 'Reference is composed into an original design built for the body it will sit on. Realism rewards a design that respects anatomy and light.',
+  },
+  {
+    n: '03',
+    title: 'Session(s)',
+    body: 'Large realism work is rarely a single sitting. Expect multiple sessions scheduled with enough recovery between them for skin and detail to hold.',
+  },
+  {
+    n: '04',
+    title: 'Healing',
+    body: 'Aftercare guidance is provided for every session, with follow-up to check healing before any further detail work is added.',
+  },
+];
+---
+
+<section id="process" class="section bg-near-black">
+  <div class="wrap">
+    <div class="process__head" data-reveal>
+      <p class="eyebrow">Process</p>
+      <h2 class="process__title">
+        <span class="metallic-text" data-sheen>What to Expect</span>
+      </h2>
+      <p class="lede process__lede">
+        Realism is a long-form commitment on both sides. The thoroughness below is part of the
+        premium experience, not a detour from it.
+      </p>
+    </div>
+
+    <ol class="process__steps">
+      {steps.map((s) => (
+        <li class="process__step" data-reveal>
+          <span class="process__num metallic-text">{s.n}</span>
+          <div>
+            <h3 class="process__step-title">{s.title}</h3>
+            <p class="process__step-body">{s.body}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+
+    <p class="process__healed" data-reveal>
+      [Placeholder: healed-work photography note — supplied]
+    </p>
+  </div>
+</section>
+
+<style>
+  .process__head {
+    max-width: 40rem;
+  }
+
+  .process__title {
+    margin-top: 0.5rem;
+    font-size: var(--text-h2);
+  }
+
+  .process__lede {
+    margin-top: 1rem;
+  }
+
+  .process__steps {
+    list-style: none;
+    margin-top: clamp(2.5rem, 6vw, 4rem);
+    display: grid;
+    gap: 0;
+  }
+
+  .process__step {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: clamp(1.25rem, 3vw, 2.5rem);
+    align-items: start;
+    padding-block: clamp(1.5rem, 3vw, 2.25rem);
+    border-top: 1px solid var(--line-soft);
+  }
+
+  .process__step:last-child {
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  .process__num {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1;
+  }
+
+  .process__step-title {
+    font-size: var(--text-h3);
+    font-weight: 500;
+  }
+
+  .process__step-body {
+    margin-top: 0.5rem;
+    max-width: 34rem;
+    color: var(--ink-soft);
+  }
+
+  .process__healed {
+    margin-top: clamp(2rem, 4vw, 3rem);
+    font-size: var(--text-small);
+    font-style: italic;
+    color: var(--ink-faint);
+    text-align: center;
+  }
+
+  @media (min-width: 700px) {
+    .process__step {
+      grid-template-columns: 6rem 1fr;
+    }
+  }
+</style>

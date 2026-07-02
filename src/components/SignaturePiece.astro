@@ -1,0 +1,76 @@
+<section id="signature" class="signature bg-near-black" data-signature-section>
+  <div class="signature__pin" data-signature-pin>
+    <div class="signature__eyebrow-row">
+      <p class="eyebrow">Signature Piece</p>
+    </div>
+
+    <div class="signature__frame" data-signature-frame>
+      <div class="placeholder-fig signature__image" style="--ph-ratio: 16/10">
+        <span class="placeholder-badge">Placeholder — highest-detail piece supplied</span>
+        <span class="placeholder-fig__label">Full back piece, black &amp; grey realism<br />awaiting final photography</span>
+      </div>
+    </div>
+
+    <div class="signature__caption" data-signature-caption>
+      <h3 class="signature__title">[Placeholder: piece title]</h3>
+      <p class="signature__meta">[Placeholder: placement &middot; session count &middot; year]</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .signature {
+    position: relative;
+    padding-block: clamp(4rem, 10vw, 7rem);
+  }
+
+  .signature__pin {
+    width: 100%;
+    max-width: var(--content-max);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.75rem;
+  }
+
+  .signature__eyebrow-row {
+    text-align: center;
+  }
+
+  .signature__frame {
+    width: min(100%, 64rem);
+    will-change: transform, clip-path;
+  }
+
+  .signature__image {
+    width: 100%;
+    height: 100%;
+  }
+
+  .signature__caption {
+    text-align: center;
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  .signature__title {
+    font-size: var(--text-h3);
+    font-weight: 500;
+  }
+
+  .signature__meta {
+    margin-top: 0.35rem;
+    font-size: var(--text-small);
+    color: var(--ink-mid);
+    letter-spacing: 0.03em;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .signature__caption {
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>
